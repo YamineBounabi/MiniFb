@@ -1,8 +1,8 @@
 <div class="row">
-  <h3>Liste des Amis</h3>
   <span><%= @user.name %></span>
   <% if not current_user.is_relative? @user and current_user.id != @user.id %>
   <span><%= link_to "add", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "post", class:"button tiny" %></span>
+  <button id="addBtn" class="button tiny">Add with Javascript</button>
   <% elsif current_user.id != @user.id %>
   <span><%= link_to "remove", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "delete", class:"button tiny alert" %></span>
   <% end %>
@@ -30,3 +30,42 @@
   </div>
 </div>
 <% end %>
+<script>
+  var app = app||{}
+
+  app.addBtn = document.getElementById("addBtn");
+  app.user_id = <%= current_user.id %>;
+  app.relative_id = <%= @user.id %>;
+
+  app.addBtn.onclick = function(){
+    app.addFriend();
+  };
+
+  app.addFriend = function(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.status == 200 && xmlhttp.readyState == 4){
+        document.getElementById("addBtn").classList.add("alert");
+        document.getElementById("addBtn").innerHTML = "Remove with Javascript";
+        document.getElementById("addBtn").onclick = app.removeFriend;
+        
+      };
+    };
+    xmlhttp.open("POST","http://localhost:3000/friendships?user_id=" + app.user_id + "&relative_id=" + app.relative_id , true);
+    xmlhttp.send();
+  };
+
+  app.removeFriend = function(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.status == 200 && xmlhttp.readyState == 4){
+        document.getElementById("addBtn").classList.remove("alert");
+        document.getElementById("addBtn").innerHTML = "Add with Javascript";
+        document.getElementById("addBtn").onclick = app.addFriend;
+        
+      };
+    };
+    xmlhttp.open("DELETE","http://localhost:3000/friendships?user_id=" + app.user_id + "&relative_id=" + app.relative_id , true);
+    xmlhttp.send();
+  };
+</script>
