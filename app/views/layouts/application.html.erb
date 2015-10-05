@@ -20,6 +20,11 @@
        <%= link_to "login", "/users/sign_in" %>
     <% end %>
 
+    <%= form_tag "/search", method: "post" do %>
+      <%= text_field_tag "query" %>
+      <%= submit_tag "search" %>
+    <% end %>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
