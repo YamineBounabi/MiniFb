@@ -1,11 +1,14 @@
 <div class="row">
-  <span><%= @user.name %></span>
+  <span><h2><%= @user.name %></h2></span>
   <% if not current_user.is_relative? @user and current_user.id != @user.id %>
   <span><%= link_to "add", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "post", class:"button tiny" %></span>
-  <button id="addBtn" class="button tiny">Add with Javascript</button>
   <% elsif current_user.id != @user.id %>
   <span><%= link_to "remove", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "delete", class:"button tiny alert" %></span>
   <% end %>
+  <% if current_user.id != @user.id %>
+  <button id="addBtn" class="button tiny">Add with Javascript</button>
+  <% end %>
+
 </div>
 <div class="row">
   <h3 class="commentaires">Commentaires</h3>
@@ -31,15 +34,19 @@
 </div>
 <% end %>
 <script>
-  var app = app||{}
+  var app = app||{};
 
   app.addBtn = document.getElementById("addBtn");
   app.user_id = <%= current_user.id %>;
   app.relative_id = <%= @user.id %>;
 
-  app.addBtn.onclick = function(){
-    app.addFriend();
-  };
+  <% if current_user.is_relative? @user %>
+  app.addBtn.classList.add("alert");
+  app.addBtn.innerHTML = "Remove with Javascript";
+  app.addBtn.onclick = function(){ app.removeFriend(); };
+  <% else %>
+  app.addBtn.onclick = function(){ app.addFriend(); }
+  <% end %>
 
   app.addFriend = function(){
     var xmlhttp = new XMLHttpRequest();
@@ -47,11 +54,10 @@
       if (xmlhttp.status == 200 && xmlhttp.readyState == 4){
         document.getElementById("addBtn").classList.add("alert");
         document.getElementById("addBtn").innerHTML = "Remove with Javascript";
-        document.getElementById("addBtn").onclick = app.removeFriend;
-        
+        document.getElementById("addBtn").onclick = app.removeFriend;       
       };
     };
-    xmlhttp.open("POST","http://localhost:3000/friendships?user_id=" + app.user_id + "&relative_id=" + app.relative_id , true);
+    xmlhttp.open("POST","/friendships?user_id=" + app.user_id + "&relative_id=" + app.relative_id, true);
     xmlhttp.send();
   };
 
@@ -61,11 +67,10 @@
       if (xmlhttp.status == 200 && xmlhttp.readyState == 4){
         document.getElementById("addBtn").classList.remove("alert");
         document.getElementById("addBtn").innerHTML = "Add with Javascript";
-        document.getElementById("addBtn").onclick = app.addFriend;
-        
+        document.getElementById("addBtn").onclick = app.addFriend; 
       };
     };
-    xmlhttp.open("DELETE","http://localhost:3000/friendships?user_id=" + app.user_id + "&relative_id=" + app.relative_id , true);
+    xmlhttp.open("DELETE","/friendships?user_id=" + app.user_id + "&relative_id=" + app.relative_id, true);
     xmlhttp.send();
   };
 </script>
