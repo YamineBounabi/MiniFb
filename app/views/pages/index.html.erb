@@ -1,2 +1,11 @@
-<h1>Pages#index</h1>
-<p>Find me in app/views/pages/index.html.erb</p>
+<% @walls.each do |wall| %>
+  <div>
+    <div>
+      <span><%= link_to wall.user.name, "/pages/#{wall.user.id}" %></span>
+      <span><%= link_to wall.relative.name, "/pages/#{wall.relative.id}" %></span>
+    </div>
+    <div>
+      <%= wall.body %>
+    </div>
+  </div>
+<% end %>

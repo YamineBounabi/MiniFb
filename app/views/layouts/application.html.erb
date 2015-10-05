@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+    <title>MiniFB</title>
 
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
@@ -13,7 +13,13 @@
   </head>
 
   <body>
-    <%= link_to "logout", "/users/sign_out", method: "delete" %>
+
+    <% if user_signed_in? %>
+      <%= link_to "logout #{current_user.name}", "/users/sign_out", method: "delete" %>
+    <% else %>
+       <%= link_to "login", "/users/sign_in" %>
+    <% end %>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 

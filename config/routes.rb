@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'pages/index'
+
+  resources :pages
+
+  resources :friendships do
+    collection do
+      delete '' => 'friendships#destroy'
+    end
+  end
+
+  resources :walls
 
   root 'pages#index'
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,24 @@
+<div>
+  <span><%= @user.name %></span>
+  <% if not current_user.is_relative? @user and current_user.id != @user.id %>
+    <span><%= link_to "add", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "post" %></span>
+  <% elsif current_user.id != @user.id %>
+    <span><%= link_to "remove", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "delete" %></span>
+  <% end %>
+</div>
+<div>
+  <% @user.walls.each do |wall| %>
+    <%= wall.user.name %>
+    <%= wall.relative.name %>
+    <%= wall.body %>
+  <% end %>
+</div>
+<% if current_user.is_reverse_relative? @user %>
+<div>
+  <%= form_tag "/walls", method: "post" do %>
+    <%= hidden_field_tag :relative_id, @user.id %>
+    <%= text_area_tag :body %>
+    <%= submit_tag "Post" %>
+  <% end %>
+</div>
+<% end %>
