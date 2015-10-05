@@ -5,5 +5,7 @@ class WallsController < ApplicationController
   end
 
   def destroy
+    Wall.find(params[:id]).destroy
+    redirect_to request.referer || '/'
   end
 end

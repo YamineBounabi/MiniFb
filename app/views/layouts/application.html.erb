@@ -23,8 +23,10 @@
   <section class="top-bar-section">
     <!-- Right Nav Section -->
     <ul class="right">
-   
-    
+     <li><a href="/">HOME</a></li>
+     <% if user_signed_in? %>
+     <li><a href="/pages/<%= current_user.id %>">PROFILE</a></li>
+     <% end %>
      <li class="has-form">
       <%= form_tag "/search", method: "post" do %>
 	<div class="row collapse">
@@ -43,7 +45,7 @@
     <% else %>
        <%= link_to "login", "/users/sign_in" %>
     <% end %>
-	</li>
+      </li>
     </ul>
   </section>
 </nav>
