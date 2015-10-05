@@ -13,18 +13,42 @@
   </head>
 
   <body>
+   
+    <nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#">MiniFB</a></h1>
+    </li>
+  </ul>
 
-    <% if user_signed_in? %>
-      <%= link_to "logout #{current_user.name}", "/users/sign_out", method: "delete" %>
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="right">
+   
+    
+     <li class="has-form">
+      <%= form_tag "/search", method: "post" do %>
+	<div class="row collapse">
+        <div class="large-8 small-9 columns">
+      <%= text_field_tag "query" %>
+        </div>
+      <div class="large-4 small-3 columns">
+      <%= submit_tag "Search", class:"alert button expand" %>
+      </div>
+      </div>
+    <% end %>
+      </li>
+      <li class="active">
+  <% if user_signed_in? %>
+    <%= link_to "logout #{current_user.name}", "/users/sign_out", method: "delete" %>
     <% else %>
        <%= link_to "login", "/users/sign_in" %>
     <% end %>
-
-    <%= form_tag "/search", method: "post" do %>
-      <%= text_field_tag "query" %>
-      <%= submit_tag "search" %>
-    <% end %>
-
+	</li>
+    </ul>
+  </section>
+</nav>
+    
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 

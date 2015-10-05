@@ -1,11 +1,12 @@
 <% @walls.each do |wall| %>
-  <div>
-    <div>
-      <span><%= link_to wall.user.name, "/pages/#{wall.user.id}" %></span>
-      <span><%= link_to wall.relative.name, "/pages/#{wall.relative.id}" %></span>
-    </div>
-    <div>
-      <%= wall.body %>
-    </div>
+<div class="row">
+  <span class="small-6 columns"><%= link_to wall.user.name, "/pages/#{wall.user.id}", class:"button tiny" %></span>
+  <span class="small-6 columns"><%= link_to wall.relative.name, "/pages/#{wall.relative.id}", class:"button tiny" %></span>
+</div>
+<div class="row">
+  <div class="large-12 columns wall-body">
+    <span><%= wall.body %></span>
   </div>
+</div>
+</div>
 <% end %>

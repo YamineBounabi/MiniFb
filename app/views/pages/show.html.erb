@@ -1,24 +1,32 @@
-<div>
+<div class="row">
+  <h3>Liste des Amis</h3>
   <span><%= @user.name %></span>
   <% if not current_user.is_relative? @user and current_user.id != @user.id %>
-    <span><%= link_to "add", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "post" %></span>
+  <span><%= link_to "add", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "post", class:"button tiny" %></span>
   <% elsif current_user.id != @user.id %>
-    <span><%= link_to "remove", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "delete" %></span>
+  <span><%= link_to "remove", "/friendships?user_id=#{current_user.id}&relative_id=#{@user.id}", method: "delete", class:"button tiny alert" %></span>
   <% end %>
 </div>
-<div>
+<div class="row">
+  <h3 class="commentaires">Commentaires</h3>
   <% @user.walls.each do |wall| %>
-    <%= wall.user.name %>
-    <%= wall.relative.name %>
+  <%= link_to wall.user.name, "/pages/#{wall.user.id}", class:"button tiny" %>
+  <%= link_to wall.relative.name, "/pages/#{wall.relative.id}", class:"button tiny" %>
+</div>
+<div class="row">
+  <div class="large-12 columns wall-body">
     <%= wall.body %>
+  </div>
   <% end %>
 </div>
 <% if current_user.is_reverse_relative? @user %>
-<div>
-  <%= form_tag "/walls", method: "post" do %>
+<div class="row">
+  <div class="large-12 columns">
+    <%= form_tag "/walls", method: "post" do %>
     <%= hidden_field_tag :relative_id, @user.id %>
     <%= text_area_tag :body %>
-    <%= submit_tag "Post" %>
-  <% end %>
+    <%= submit_tag "Post", class:"button radius" %>
+    <% end %>
+  </div>
 </div>
 <% end %>
