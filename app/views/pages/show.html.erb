@@ -12,7 +12,7 @@
 <div class="row">
   <h3>Friends</h3>
   <% @user.relatives.each do |relative| %>
-    <%= link_to relative.name, "/pages/#{relative.id}", class:"button tiny" %>
+    <%= link_to relative.name, "/pages/#{relative.id}", class:"button success" %>
   <% end %>
 </div>
 <div class="row">
@@ -20,21 +20,21 @@
   <% @user.walls.each do |wall| %>
   <%= link_to wall.user.name, "/pages/#{wall.user.id}", class:"button tiny alert" %>
   <%= link_to wall.relative.name, "/pages/#{wall.relative.id}", class:"button tiny" %>
-  <%= link_to "DELETE", "/walls/#{wall.id}", method: "delete", class:"button tiny secondary" %>
+  <%= link_to "DELETE", "/walls/#{wall.id}", method: "delete", class:"button tiny secondary right" %>
 </div>
 <div class="row">
-  <div class="large-12 columns wall-body">
+  <div class="large-12 columns wall-body panel">
     <%= wall.body %>
   </div>
   <% end %>
 </div>
-<% if current_user.is_reverse_relative? @user or current_user.id == @user.id%>
+<% if current_user.is_reverse_relative? @user or current_user.id == @user.id %>
 <div class="row">
-  <div class="large-12 columns">
+  <div class="large-12 columns panel">
     <%= form_tag "/walls", method: "post" do %>
     <%= hidden_field_tag :relative_id, @user.id %>
     <%= text_area_tag :body %>
-    <%= submit_tag "Post", class:"button radius" %>
+    <%= submit_tag "Post", class:"button radius tiny" %>
     <% end %>
   </div>
 </div>

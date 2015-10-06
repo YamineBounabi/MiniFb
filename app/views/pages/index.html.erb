@@ -1,10 +1,10 @@
 <% @walls.each do |wall| %>
 <div class="row">
-  <span><%= link_to wall.user.name, "/pages/#{wall.user.id}", class:"button tiny alert" %></span>
-  <span><%= link_to wall.relative.name, "/pages/#{wall.relative.id}", class:"button tiny" %></span>
+  <span class="left"><%= link_to wall.user.name, "/pages/#{wall.user.id}", class:"button tiny alert" %></span>
+  <span class="right"><%= link_to wall.relative.name, "/pages/#{wall.relative.id}", class:"button tiny" %></span>
 </div>
 <div class="row">
-  <div class="large-12 columns wall-body">
+  <div class="large-12 columns wall-body panel">
     <span><%= wall.body %></span>
   </div>
 </div>
