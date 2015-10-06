@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>MiniFB</title>
-
+     
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "autocomplete-rails.js" %>
     <%= csrf_meta_tags %>
   </head>
 
@@ -32,7 +33,7 @@
       <%= form_tag "/search", method: "post" do %>
 	<div class="row collapse">
         <div class="large-8 small-9 columns">
-      <%= text_field_tag "query", params[:query] %>
+      <%= autocomplete_field_tag "query", params[:query],autocomplete_user_name_pages_path, :size => 10 %>
         </div>
       <div class="large-4 small-3 columns">
       <%= submit_tag "Search", class:"alert button expand" %>

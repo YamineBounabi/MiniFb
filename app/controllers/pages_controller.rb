@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+
+  autocomplete :user, :name 
+
   def index
     @walls = Wall.personal(current_user.id).includes(:user)
     flash[:notice] = "#{@walls.length} Post(s)"

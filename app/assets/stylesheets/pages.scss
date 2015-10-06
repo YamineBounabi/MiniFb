@@ -7,3 +7,21 @@
 h2 {
   text-transform: uppercase;
 }
+
+.ui-menu-item {
+  list-style: none;
+  background: #E7E7E7;
+  padding: 4px;
+  font-size: 14px;
+  border: 1px solid rgb(204, 204, 204);
+}
+
+.ui-autocomplete {
+  width:104px;
+  height:28px;
+}
+
+.ui-helper-hidden-accessible{
+  display:none;
+}
+

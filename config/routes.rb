@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :pages
+  
+
+  resources :pages do
+      get :autocomplete_user_name, :on => :collection
+  end
 
   resources :friendships do
     collection do
