@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   autocomplete :user, :name 
 
   def index
-    @walls = Wall.personal(current_user.relatives.map{|r| r.id}.push(current_user.id)).includes(:user)
+    @walls = Wall.personal current_user.id
     flash[:notice] = "#{@walls.length} Post(s)"
   end
 
